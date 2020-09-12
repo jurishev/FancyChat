@@ -1,0 +1,27 @@
+﻿<Window x:Class="Chat.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel LastChildFill="True">
+        
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Run the count" Command="{Binding RunCommand}"/>
+            <Button Grid.Column="1" Content="Stop the count" Command="{Binding StopCommand}"/>
+            <Button Grid.Column="2" Content="Launch a browser tab" Command="{Binding LaunchCommand}"/>
+        </Grid>
+
+        <TextBox DockPanel.Dock="Bottom" Text="{Binding Input}"/>
+
+        <TextBlock Background="Black" Foreground="White" Text="{Binding Output}"/>
+        
+    </DockPanel>
+</Window>
