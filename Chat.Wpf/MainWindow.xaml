@@ -7,17 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel LastChildFill="True">
-        
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Run the count" Command="{Binding RunCommand}"/>
-            <Button Grid.Column="1" Content="Stop the count" Command="{Binding StopCommand}"/>
-            <Button Grid.Column="2" Content="Launch a browser tab" Command="{Binding LaunchCommand}"/>
-        </Grid>
+
+        <Button DockPanel.Dock="Top" Content="Launch a browser tab" Command="{Binding LaunchCommand}"/>
 
         <TextBox DockPanel.Dock="Bottom" Text="{Binding Input}"/>
 

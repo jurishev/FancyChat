@@ -1,30 +1,20 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Text;
 
 namespace Chat.Wpf
 {
     internal class MainWindowViewModel : ObservableModel
     {
-        private BackgroundWorker worker;
+        private readonly string html;
 
         private string input;
         private string output;
 
-        private ActionCommand runCommand;
-        private ActionCommand stopCommand;
         private ActionCommand launchCommand;
 
-        public BackgroundWorker Worker
-        {
-            get => worker;
-
-            set
-            {
-                worker = value;
-                OnPropertyChanged(nameof(Worker));
-            }
-        }
+        public MainWindowViewModel() => html = File.ReadAllText("index.html");
 
         public string Input
         {
@@ -48,44 +38,30 @@ namespace Chat.Wpf
             }
         }
 
-        public ActionCommand RunCommand =>
-            runCommand ??= new ActionCommand(_ =>
-            {
-                Worker = new BackgroundWorker()
-                {
-                    WorkerReportsProgress = true,
-                    WorkerSupportsCancellation = true,
-                };
-
-                Worker.DoWork += Server.Run;
-
-                Worker.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
-                    Output = e.UserState is string
-                        ? $"{(Output is null ? e.UserState : $"{Output}\n{e.UserState}")}"
-                        : throw new InvalidOperationException();
-
-                Worker.RunWorkerAsync(Worker);
-
-            }, _ => Worker is null);
-
-        public ActionCommand StopCommand =>
-            stopCommand ??= new ActionCommand(_ =>
-            {
-                Worker?.CancelAsync();
-                Worker = null;
-
-            }, _ => Worker != null);
-
         public ActionCommand LaunchCommand =>
-            launchCommand ??= new ActionCommand(_ =>
-            {
-                var psi = new ProcessStartInfo()
-                {
-                    FileName = "index.html",
-                    UseShellExecute = true,
-                };
+            launchCommand ??= new ActionCommand(_ => Listen());
 
-                var p = Process.Start(psi);
+        private async void Listen()
+        {
+            var listener = new HttpListener();
+            listener.Prefixes.Add("http://localhost:4000/");
+            listener.Start();
+
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "http://localhost:4000/",
+                UseShellExecute = true,
             });
+
+            var httpContext = await listener.GetContextAsync();
+            var response = httpContext.Response;
+
+            byte[] buff = Encoding.UTF8.GetBytes(html);
+            response.ContentLength64 = buff.Length;
+            response.OutputStream.Write(buff, 0, buff.Length);
+            response.OutputStream.Close();
+
+            listener.Stop();
+        }
     }
 }
