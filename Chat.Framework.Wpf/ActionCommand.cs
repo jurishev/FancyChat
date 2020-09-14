@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Chat.Wpf
+namespace Chat.Framework.Wpf
 {
+    /// <summary>
+    /// MVVM command base class.
+    /// </summary>
     internal class ActionCommand : ICommand
     {
         private readonly Action<object> action;

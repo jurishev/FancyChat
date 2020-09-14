@@ -1,7 +1,7 @@
-﻿<Application x:Class="Chat.Wpf.App"
+﻿<Application x:Class="Chat.Framework.Wpf.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Chat.Wpf"
+             xmlns:local="clr-namespace:Chat.Framework.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
