@@ -8,10 +8,37 @@ namespace Chat.Core.Wpf
         private string console = string.Empty;
         private string input = string.Empty;
 
+        private ActionCommand runServerCommand;
+        private ActionCommand connectCommand;
         private ActionCommand launchClientCommand;
         private ActionCommand sendMessageCommand;
 
-        public HubConnection Connection { get; set; }
+        private bool isWebHostOn;
+        private bool isConnected;
+
+        public HubConnection SignalRConnection { get; set; }
+
+        public bool IsWebHostOn
+        {
+            get => isWebHostOn;
+
+            set
+            {
+                isWebHostOn = value;
+                OnPropertyChanged(nameof(IsWebHostOn));
+            }
+        }
+
+        public bool IsConnected
+        {
+            get => isConnected;
+
+            set
+            {
+                isConnected = value;
+                OnPropertyChanged(nameof(IsConnected));
+            }
+        }
 
         public string Console
         {
@@ -35,6 +62,26 @@ namespace Chat.Core.Wpf
             }
         }
 
+        public ActionCommand RunServerCommand =>
+            runServerCommand ??= new ActionCommand(_ =>
+            {
+                if (!isWebHostOn)
+                {
+                    IsWebHostOn = true;
+                    WebHost.RunAsync();
+                }
+            }, _ => !IsWebHostOn);
+
+        public ActionCommand ConnectCommand =>
+            connectCommand ??= new ActionCommand(_ =>
+            {
+                if (!isConnected)
+                {
+                    IsConnected = true;
+                    ConnectAsync();
+                }
+            }, _ => IsWebHostOn && !IsConnected);
+
         public ActionCommand LaunchClientCommand =>
             launchClientCommand ??= new ActionCommand(_ =>
             {
@@ -43,24 +90,25 @@ namespace Chat.Core.Wpf
                     FileName = "http://localhost:5000",
                     UseShellExecute = true,
                 });
-            });
+            }, _ => IsWebHostOn && IsConnected);
 
         public ActionCommand SendMessageCommand =>
             sendMessageCommand ??= new ActionCommand(async _ =>
             {
-                await Connection.InvokeAsync("Broadcast", "WPF", Input);
+                await SignalRConnection.InvokeAsync("Broadcast", "WPF", Input);
                 Input = string.Empty;
-            });
 
-        public async void ConnectAsync()
+            }, _ => IsWebHostOn && IsConnected);
+
+        private async void ConnectAsync()
         {
-            Connection = new HubConnectionBuilder()
+            SignalRConnection = new HubConnectionBuilder()
                 .WithUrl("http://localhost:5000/chat")
                 .Build();
 
-            Connection.On<string, string>("Receive", (user, msg) => Console += $"{user}: {msg}\n");
+            SignalRConnection.On<string, string>("Receive", (user, msg) => Console += $"{user}: {msg}\n");
 
-            await Connection.StartAsync();
+            await SignalRConnection.StartAsync();
         }
     }
 }

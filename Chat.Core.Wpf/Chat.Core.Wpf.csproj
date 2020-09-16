@@ -7,7 +7,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <StartupObject>Chat.Core.Wpf.App</StartupObject>
   </PropertyGroup>
   
   <ItemGroup>

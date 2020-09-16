@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.ComponentModel;
 
 namespace Chat.Core.Wpf
 {
@@ -14,14 +15,18 @@ namespace Chat.Core.Wpf
             DataContext = new MainWindowViewModel();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Closing(object sender, CancelEventArgs e)
         {
-            (DataContext as MainWindowViewModel)?.ConnectAsync();
-        }
+            var connection = (DataContext as MainWindowViewModel)?.SignalRConnection;
 
-        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            await (DataContext as MainWindowViewModel)?.Connection.DisposeAsync();
+            if (connection != null)
+            {
+                await connection.StopAsync();
+                await connection.DisposeAsync();
+            }
+
+            WebHost.Stop();
+            WebHost.Dispose();
         }
     }
 }
