@@ -15,6 +15,11 @@ namespace Chat.Core.Wpf
             DataContext = new MainWindowViewModel();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindowViewModel)?.ConnectAsync();
+        }
+
         private async void Window_Closing(object sender, CancelEventArgs e)
         {
             var connection = (DataContext as MainWindowViewModel)?.SignalRConnection;
@@ -24,9 +29,6 @@ namespace Chat.Core.Wpf
                 await connection.StopAsync();
                 await connection.DisposeAsync();
             }
-
-            WebHost.Stop();
-            WebHost.Dispose();
         }
     }
 }
