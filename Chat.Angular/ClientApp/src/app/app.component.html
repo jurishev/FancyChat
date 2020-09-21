@@ -1,0 +1,31 @@
+<div class="container">
+
+  <div class="form-row my-3" *ngIf="!isConnected">
+    <div class="mx-auto">
+      <button (click)="connectToSignalR()" class="btn btn-primary">Connect to the chat</button>
+    </div>
+  </div>
+
+  <div class="form-row mt-3" *ngIf="isConnected">
+    <div class="col-sm-3 my-2">
+      <input [(ngModel)]="user" type="text" class="form-control" placeholder="User" />
+    </div>
+    <div class="col-sm-7 my-2">
+      <input [(ngModel)]="message" type="text" class="form-control" placeholder="Message" />
+    </div>
+    <div class="col my-2">
+      <button (click)="sengMessage()" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<hr />
+
+<div class="container" *ngIf="inbox.length > 0">
+  <ul class="m-0">
+    <li *ngFor="let envelope of inbox">
+      <strong>{{envelope.user}}: </strong>{{envelope.message}}
+    </li>
+  </ul>
+</div>
