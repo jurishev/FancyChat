@@ -1,0 +1,16 @@
+﻿<Project>
+
+  <Sdk Name="Microsoft.NET.Sdk.WindowsDesktop" />
+  <Sdk Name="Microsoft.NET.Sdk.Web" />
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.8" />
+  </ItemGroup>
+
+</Project>
