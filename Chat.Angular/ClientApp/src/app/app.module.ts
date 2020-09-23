@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { InboxViewComponent } from './inbox-view/inbox-view.component';
+import { UserInputComponent } from './user-input/user-input.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InboxViewComponent,
+    UserInputComponent
   ],
   imports: [
     BrowserModule,

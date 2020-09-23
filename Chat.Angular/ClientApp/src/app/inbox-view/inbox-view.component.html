@@ -1,0 +1,5 @@
+<ul *ngIf="inbox.length > 0" class="m-0">
+  <li *ngFor="let envelope of inbox">
+    <strong>{{envelope.user}}: </strong>{{envelope.message}}
+  </li>
+</ul>

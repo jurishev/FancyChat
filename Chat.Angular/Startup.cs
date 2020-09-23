@@ -19,17 +19,19 @@ namespace Chat.Angular
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("/chat");
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:4200");
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:4200");
+            //});
         }
     }
 }

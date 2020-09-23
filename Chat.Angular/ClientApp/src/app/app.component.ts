@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 import { HubConnection } from '@aspnet/signalr';
+import { Envelope } from './envelope';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
 
   private connection: HubConnection;
   isConnected: boolean;
 
-  user: string;
-  message: string;
   inbox: Envelope[] = [];
 
-  connectToSignalR() {
+  connect() {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl('/chat').build();
     
@@ -28,18 +26,7 @@ export class AppComponent {
     this.isConnected = true;
   }
 
-  sengMessage() {
-    this.connection.invoke("Broadcast", this.user, this.message);
-  }
-}
-
-class Envelope {
-
-  user: string;
-  message: string;
-
-  constructor(usr: string, msg: string) {
-    this.user = usr;
-    this.message = msg;
+  send(env: Envelope) {
+    this.connection.invoke("Broadcast", env.user, env.message);
   }
 }
