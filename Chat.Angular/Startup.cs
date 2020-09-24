@@ -9,6 +9,7 @@ namespace Chat.Angular
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddSignalR();
         }
 
@@ -25,6 +26,7 @@ namespace Chat.Angular
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
             });
 

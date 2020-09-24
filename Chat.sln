@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Owin", "Chat.Owin\Chat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Mvc", "Chat.Mvc\Chat.Mvc.csproj", "{61027A31-5209-4B8E-B576-99F0361EC0C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Angular", "Chat.Angular\Chat.Angular.csproj", "{5F4B70CB-FC3D-4188-B0CF-D3935667FF39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Angular", "Chat.Angular\Chat.Angular.csproj", "{5F4B70CB-FC3D-4188-B0CF-D3935667FF39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

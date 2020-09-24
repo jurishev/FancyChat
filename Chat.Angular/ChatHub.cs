@@ -6,7 +6,7 @@ namespace Chat.Angular
     /// <summary>
     /// SignalR public hub.
     /// </summary>
-    internal class ChatHub : Hub
+    public class ChatHub : Hub
     {
         public async Task Broadcast(string user, string msg)
         {
