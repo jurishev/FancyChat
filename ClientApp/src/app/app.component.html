@@ -1,13 +1,5 @@
-<div class="container">
+<app-chat *ngIf="isLoggedIn"></app-chat>
 
-  <div *ngIf="!isConnected" class="form-row my-3">
-    <button (click)="connect()" class="btn btn-primary mx-auto">Connect to the chat</button>
-  </div>
+<app-login *ngIf="!isLoggedIn && !isRegistering" (registerClickEvent)="showRegister()"></app-login>
 
-  <app-user-input *ngIf="isConnected" (newInputEvent)="send($event)"></app-user-input>
-
-  <hr />
-
-  <app-inbox-view [inbox]="inbox"></app-inbox-view>
-
-</div>
+<app-register *ngIf="!isLoggedIn && isRegistering" (loginClickEvent)="showLogin()"></app-register>

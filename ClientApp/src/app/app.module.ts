@@ -6,12 +6,18 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { InboxViewComponent } from './inbox-view/inbox-view.component';
 import { UserInputComponent } from './user-input/user-input.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InboxViewComponent,
-    UserInputComponent
+    UserInputComponent,
+    LoginComponent,
+    RegisterComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
