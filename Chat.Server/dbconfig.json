@@ -1,0 +1,3 @@
+{
+  "ChatDbConnectionString": "data source=(localdb)\\MSSQLLocalDB; Integrated Security=True; Initial Catalog=fchatdb;"
+}

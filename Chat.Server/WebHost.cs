@@ -35,6 +35,7 @@ namespace Chat.Server
             Host.CreateDefaultBuilder()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseEnvironment(Environments.Development);
                     webBuilder.UseUrls("http://localhost:5000");
                     webBuilder.UseStartup<Startup>();
                 });
