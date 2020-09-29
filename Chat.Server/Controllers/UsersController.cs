@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using Chat.Data;
 
@@ -41,13 +42,15 @@ namespace Chat.Server.Controllers
                 return ValidationProblem();
             }
 
-            if (userService.Exists(user.Login))
+            try
             {
-                return BadRequest($"Login '{user.Login}' is already taken.");
+                userService.Create(user);
+                return Ok();
             }
-
-            userService.Create(user);
-            return Ok();
+            catch (SqlException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
