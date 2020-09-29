@@ -2,7 +2,7 @@
 
 SignalR chat hosted by an ASP.NET Core server run by a WPF application.
 
-### Module relations
+### Module dependencies
 
 ![Module relations](modules.png)
 
