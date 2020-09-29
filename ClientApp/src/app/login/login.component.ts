@@ -10,20 +10,39 @@ import { UserService } from '../user.service';
 export class LoginComponent {
 
   @Output() registerClickEvent = new EventEmitter();
-
+  @Output() authorizedEvent = new EventEmitter();
+  
   login: string;
   password: string;
 
-  isEmptyForm: boolean;
+  userNotFound: boolean;
+  wrongPassword: boolean;
+
+  constructor(private userService: UserService) { }
 
   gotoRegister() {
+    this.resetFlags();
     this.registerClickEvent.emit();
   }
 
   submit() {
-    if (!this.login || !this.password) {
-      this.isEmptyForm = true;
-      return;
-    }   
+    this.userService.get(this.login)
+      .subscribe((user: User) => {
+        if (user.password === this.password) {
+          this.authorizedEvent.emit();
+        }
+        else {
+          this.wrongPassword = true;
+        }
+      }, error => {
+        if (error.status === 404) {
+          this.userNotFound = true;
+        }
+      });
+  }
+
+  resetFlags() {
+    this.userNotFound = false;
+    this.wrongPassword = false;
   }
 }

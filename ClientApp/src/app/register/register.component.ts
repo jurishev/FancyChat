@@ -1,28 +1,40 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
+  providers: [UserService]
 })
 export class RegisterComponent {
 
   @Output() loginClickEvent = new EventEmitter();
+  @Output() authorizedEvent = new EventEmitter();
 
-  login: string;
-  password: string;
-  country: string;
-  city: string;
+  user = new User();
 
-  isEmptyForm: boolean;
+  isLoginTaken: boolean;
+
+  constructor(private userService: UserService) { }
 
   gotoLogin() {
+    this.resetFlags();
     this.loginClickEvent.emit();
   }
 
   submit() {
-    if (!this.login || !this.password) {
-      this.isEmptyForm = true;
-      return;
-    }
+    this.userService.create(this.user)
+      .subscribe(_ => {
+        this.authorizedEvent.emit();
+      }, error => {
+        if (error.status === 400) {
+          this.isLoginTaken = true;
+        }
+      });
+  }
+
+  resetFlags() {
+    this.isLoginTaken = false;
   }
 }

@@ -16,4 +16,9 @@ export class AppComponent {
   showLogin() {
     this.isRegistering = false;
   }
+
+  showChat() {
+    this.isRegistering = false;
+    this.isLoggedIn = true;
+  }
 }
