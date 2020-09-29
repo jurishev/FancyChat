@@ -1,7 +1,7 @@
-<app-chat *ngIf="isLoggedIn"></app-chat>
+<app-chat *ngIf="isLoggedIn" [user]="user"></app-chat>
 
 <app-login *ngIf="!isLoggedIn && !isRegistering" 
-  (registerClickEvent)="showRegister()" (authorizedEvent)="showChat()"></app-login>
+  (registerClickEvent)="showRegister()" (authorizedEvent)="showChat($event)"></app-login>
 
 <app-register *ngIf="!isLoggedIn && isRegistering" 
-  (loginClickEvent)="showLogin()" (authorizedEvent)="showChat()"></app-register>
+  (loginClickEvent)="showLogin()" (authorizedEvent)="showChat($event)"></app-register>

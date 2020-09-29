@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Envelope } from '../envelope';
+import { User } from '../user';
 
 @Component({
   selector: 'app-user-input',
@@ -9,10 +10,10 @@ export class UserInputComponent {
 
   @Output() newInputEvent = new EventEmitter<Envelope>();
 
-  user: string;
+  @Input() user: User;
   message: string;
 
   send() {
-    this.newInputEvent.emit(new Envelope(this.user, this.message));
+    this.newInputEvent.emit(new Envelope(this.user.login, this.message));
   }
 }

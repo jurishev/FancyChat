@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ export class AppComponent {
   isLoggedIn: boolean;
   isRegistering: boolean;
 
+  user = new User();
+
   showRegister() {
     this.isRegistering = true;
   }
@@ -17,7 +20,8 @@ export class AppComponent {
     this.isRegistering = false;
   }
 
-  showChat() {
+  showChat(user: User) {
+    this.user = user;
     this.isRegistering = false;
     this.isLoggedIn = true;
   }

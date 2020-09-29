@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 import { HubConnection } from '@aspnet/signalr';
 import { Envelope } from '../envelope';
 import { EnvelopeService } from '../envelope.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-chat',
@@ -14,6 +15,7 @@ export class ChatComponent {
   private connection: HubConnection;
   isConnected: boolean;
 
+  @Input() user: User;
   inbox: Envelope[] = [];
 
   constructor(private envelopeService: EnvelopeService) { }

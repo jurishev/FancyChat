@@ -26,7 +26,7 @@ export class RegisterComponent {
   submit() {
     this.userService.create(this.user)
       .subscribe(_ => {
-        this.authorizedEvent.emit();
+        this.authorizedEvent.emit(this.user);
       }, error => {
         if (error.status === 400) {
           this.isLoginTaken = true;

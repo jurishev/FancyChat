@@ -29,7 +29,7 @@ export class LoginComponent {
     this.userService.get(this.login)
       .subscribe((user: User) => {
         if (user.password === this.password) {
-          this.authorizedEvent.emit();
+          this.authorizedEvent.emit(user);
         }
         else {
           this.wrongPassword = true;
