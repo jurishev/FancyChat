@@ -12,11 +12,9 @@ export class LoginComponent {
   @Output() registerClickEvent = new EventEmitter();
   @Output() authorizedEvent = new EventEmitter();
   
-  login: string;
-  password: string;
-
-  userNotFound: boolean;
-  wrongPassword: boolean;
+  user = new User();
+  notFound: boolean;
+  unauthorized: boolean;
 
   constructor(private userService: UserService) { }
 
@@ -26,23 +24,22 @@ export class LoginComponent {
   }
 
   submit() {
-    this.userService.get(this.login)
-      .subscribe((user: User) => {
-        if (user.password === this.password) {
-          this.authorizedEvent.emit(user);
-        }
-        else {
-          this.wrongPassword = true;
-        }
+    this.userService.login(this.user)
+      .subscribe(response => {
+        localStorage.setItem('fancy-chat-jwt', (<any>response).token);
+        this.authorizedEvent.emit();
       }, error => {
         if (error.status === 404) {
-          this.userNotFound = true;
+          this.notFound = true;
+        }
+        else if (error.status === 401) {
+          this.unauthorized = true;
         }
       });
   }
 
   resetFlags() {
-    this.userNotFound = false;
-    this.wrongPassword = false;
+    this.notFound = false;
+    this.unauthorized = false;
   }
 }

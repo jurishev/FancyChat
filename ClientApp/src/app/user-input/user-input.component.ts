@@ -9,11 +9,16 @@ import { User } from '../user';
 export class UserInputComponent {
 
   @Output() newInputEvent = new EventEmitter<Envelope>();
+  @Output() logoutEvent = new EventEmitter();
 
   @Input() user: User;
   message: string;
 
   send() {
     this.newInputEvent.emit(new Envelope(this.user.login, this.message));
+  }
+
+  logout() {
+    this.logoutEvent.emit();
   }
 }

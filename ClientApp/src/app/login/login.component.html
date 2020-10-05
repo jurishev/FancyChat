@@ -7,9 +7,9 @@
       <div class="form-group">
         <label>Login *</label>
         <input required minlength="2" name="loginVar" #loginVar="ngModel"
-          [(ngModel)]="login" type="text" class="form-control" (input)="resetFlags()">
+          [(ngModel)]="user.login" type="text" class="form-control" (input)="resetFlags()">
 
-        <p *ngIf="userNotFound" class="text-danger"><small>User not found.</small></p>
+        <p *ngIf="notFound" class="text-danger"><small>No such user.</small></p>
         <div *ngIf="loginVar.invalid && (loginVar.dirty || loginVar.touched)" class="text-danger">
           <p *ngIf="loginVar.errors.required"><small>Please enter your login.</small></p>
           <p *ngIf="loginVar.errors.minlength"><small>Login must be at least 2 characters long.</small></p>
@@ -19,9 +19,9 @@
       <div class="form-group">
         <label>Password *</label>
         <input required minlength="2" name="passVar" #passVar="ngModel"
-          [(ngModel)]="password" type="password" class="form-control" (input)="resetFlags()">
+          [(ngModel)]="user.password" type="password" class="form-control" (input)="resetFlags()">
         
-        <p *ngIf="wrongPassword" class="text-danger"><small>Wrong password.</small></p>
+        <p *ngIf="unauthorized" class="text-danger"><small>Invalid password.</small></p>
         <div *ngIf="passVar.invalid && (passVar.dirty || passVar.touched)" class="text-danger">
           <p *ngIf="passVar.errors.required"><small>Please enter your password.</small></p>
           <p *ngIf="passVar.errors.minlength"><small>Password must be at least 2 characters long.</small></p>

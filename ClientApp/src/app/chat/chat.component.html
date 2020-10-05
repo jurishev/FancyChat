@@ -4,7 +4,8 @@
     <button (click)="connect()" class="btn btn-primary mx-auto">Connect to the chat</button>
   </div>
 
-  <app-user-input *ngIf="isConnected" (newInputEvent)="send($event)" [user]="user"></app-user-input>
+  <app-user-input *ngIf="isConnected" [user]="user" 
+    (newInputEvent)="send($event)" (logoutEvent)="logout()"></app-user-input>
 
   <hr />
 

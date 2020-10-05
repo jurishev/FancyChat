@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
-import { User } from './user';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  isLoggedIn: boolean;
-  isRegistering: boolean;
+  isLoggedIn = false;
+  isRegistering = false;
 
-  user = new User();
+  ngOnInit() {
+    if (this.hasToken()) {
+      this.isLoggedIn = true;
+    }
+  }
 
   showRegister() {
     this.isRegistering = true;
@@ -20,9 +23,20 @@ export class AppComponent {
     this.isRegistering = false;
   }
 
-  showChat(user: User) {
-    this.user = user;
-    this.isRegistering = false;
-    this.isLoggedIn = true;
+  showChat() {    
+    if (this.hasToken()) {
+      this.isLoggedIn = true;
+      this.isRegistering = false;
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('fancy-chat-jwt');
+    this.isLoggedIn = false;
+  }
+
+  hasToken(): boolean {
+    let token = localStorage.getItem('fancy-chat-jwt');
+    return token ? true : false;
   }
 }

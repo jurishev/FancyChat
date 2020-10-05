@@ -13,7 +13,6 @@ export class RegisterComponent {
   @Output() authorizedEvent = new EventEmitter();
 
   user = new User();
-
   isLoginTaken: boolean;
 
   constructor(private userService: UserService) { }
@@ -26,7 +25,11 @@ export class RegisterComponent {
   submit() {
     this.userService.create(this.user)
       .subscribe(_ => {
-        this.authorizedEvent.emit(this.user);
+        this.userService.login(this.user)
+          .subscribe(response => {
+            localStorage.setItem('fancy-chat-jwt', (<any>response).token);
+            this.authorizedEvent.emit();
+          });
       }, error => {
         if (error.status === 400) {
           this.isLoginTaken = true;
